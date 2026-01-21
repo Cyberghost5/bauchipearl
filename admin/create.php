@@ -15,19 +15,19 @@ $error = $_GET['error'] ?? '';
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="../assets/bph-favicon.png" type="image/png">
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="shortcut icon" href="/assets/bph-favicon.png" type="image/png">
+    <link rel="stylesheet" href="/admin/admin.css" />
   </head>
   <body>
     <div class="admin-page">
       <header class="admin-header">
         <div>
-          <img src="../assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 100px;" />
+          <img src="/assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 100px;" />
           <p class="kicker">Bauchi Pearl Magazine</p>
           <h1>Add Profile</h1>
         </div>
         <div class="admin-actions">
-          <a class="button ghost" href="./">Back to Dashboard</a>
+          <a class="button ghost" href="/admin">Back to Dashboard</a>
         </div>
       </header>
 
@@ -37,7 +37,7 @@ $error = $_GET['error'] ?? '';
         <div class="panel warning">Please upload a valid image file.</div>
       <?php endif; ?>
 
-      <form class="panel form" method="post" action="store.php" enctype="multipart/form-data">
+      <form class="panel form" method="post" action="/admin/store" enctype="multipart/form-data">
         <label>
           Name
           <input type="text" name="name" required />
@@ -56,7 +56,7 @@ $error = $_GET['error'] ?? '';
         </label>
         <div class="form-actions">
           <button class="button" type="submit">Save Profile</button>
-          <a class="button ghost" href="./">Cancel</a>
+          <a class="button ghost" href="/admin">Cancel</a>
         </div>
       </form>
     </div>

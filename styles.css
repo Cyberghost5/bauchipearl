@@ -6,6 +6,7 @@
   --muted: #6a635b;
   --border: #e2ded6;
   --accent: #8d6b3f;
+  --text-color: #1d4453;
   --font-title: "Cormorant Garamond", "Times New Roman", serif;
   --font-body: "Source Sans 3", "Arial", sans-serif;
 }
@@ -49,6 +50,7 @@ img {
 }
 
 .site-header h1 {
+  color: var(--text-color);
   font-family: var(--font-title);
   font-size: clamp(2.4rem, 4vw, 3.6rem);
   margin: 0 0 12px;
@@ -72,6 +74,7 @@ img {
 }
 
 .section-title h2 {
+  color: var(--text-color);
   font-family: var(--font-title);
   font-size: clamp(2rem, 3vw, 2.6rem);
   margin: 0 0 8px;
@@ -192,6 +195,7 @@ img {
 }
 
 .profile-detail-body h2 {
+  color: var(--text-color);
   font-family: var(--font-title);
   font-size: clamp(2rem, 3vw, 2.8rem);
   margin: 0 0 8px;

@@ -1,0 +1,20 @@
+DirectoryIndex index.php
+
+RewriteEngine On
+RewriteBase /
+
+# Redirect explicit .php requests to extensionless paths.
+RewriteRule ^index\.php$ / [R=301,L]
+RewriteRule ^admin/index\.php$ /admin/ [R=301,L]
+RewriteCond %{QUERY_STRING} ^slug=([^&]+)$ [NC]
+RewriteRule ^profile\.php$ /profile/%1? [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php(?:\s|\?) [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# Pretty profile URLs.
+RewriteRule ^profile/([^/]+)/?$ profile.php?slug=$1 [L,QSA]
+
+# Map extensionless requests to .php files.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]

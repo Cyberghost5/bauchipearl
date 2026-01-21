@@ -2,7 +2,7 @@
 require __DIR__ . '/bootstrap.php';
 
 if (is_logged_in()) {
-    redirect('./');
+    redirect('/admin');
 }
 
 $error = '';
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($username !== '' && $password !== '' && verify_admin_credentials($username, $password)) {
         login_admin($username);
-        redirect('./');
+        redirect('/admin');
     }
 
     $error = 'Invalid username or password.';
@@ -31,19 +31,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="../assets/bph-favicon.png" type="image/png">
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="shortcut icon" href="/assets/bph-favicon.png" type="image/png">
+    <link rel="stylesheet" href="/admin/admin.css" />
   </head>
   <body>
     <div class="admin-page login-page">
       <div class="login-card panel">
-        <img src="../assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 100px;" />
+        <img src="/assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 100px;" />
         <p class="kicker">Bauchi Pearl Magazine</p>
         <h1>Admin Login</h1>
         <?php if ($error !== '') : ?>
           <p class="login-error"><?php echo e($error); ?></p>
         <?php endif; ?>
-        <form class="form" method="post" action="login.php">
+        <form class="form" method="post" action="/admin/login">
           <label>
             Username
             <input type="text" name="username" autocomplete="username" required />

@@ -28,7 +28,7 @@ $error = null;
 $profiles = [];
 
 try {
-    $stmt = db()->query('SELECT id, name, role, bio, image_path FROM profiles ORDER BY created_at DESC');
+    $stmt = db()->query('SELECT id, name, role, bio, created_at, slug, image_path FROM profiles ORDER BY created_at DESC');
     $profiles = $stmt->fetchAll();
 } catch (Throwable $throwable) {
     $error = 'Unable to load profiles right now. Please check your database connection.';
@@ -46,15 +46,15 @@ try {
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="assets/bph-favicon.png" type="image/png">
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="/assets/bph-favicon.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <div class="page">
       <header class="site-header">
         <p class="kicker">Entertainment and Lifestyle Magazine</p>
         <center>
-          <img src="assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 200px;" />
+          <img src="/assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 200px;" />
         </center>
         <h1>Bauchi Pearl Magazine</h1>
         <p class="intro">
@@ -84,6 +84,9 @@ try {
                 if ($imagePath === '' || !is_file($absolutePath)) {
                     $imagePath = 'assets/placeholder.svg';
                 }
+                if ($imagePath !== '' && $imagePath[0] !== '/') {
+                    $imagePath = '/' . $imagePath;
+                }
               ?>
               <article class="profile-card">
                 <img
@@ -95,7 +98,9 @@ try {
                   <h3><?php echo e($profile['name']); ?></h3>
                   <p class="profile-role"><?php echo e($profile['role']); ?></p>
                   <p class="profile-note"><?php echo e(excerpt($profile['bio'])); ?></p>
-                  <a class="read-more" href="profile.php?id=<?php echo (int) $profile['id']; ?>">
+                  <p><?php echo e(date('dS F, Y', strtotime($profile['created_at']))) ?></p>
+                  <!-- <a class="read-more" href="profile.php?id=<?php echo (int) $profile['id']; ?>"> -->
+                  <a class="read-more" href="/profile/<?php echo rawurlencode((string) $profile['slug']); ?>">
                     Read more
                   </a>
                 </div>
@@ -107,7 +112,7 @@ try {
 
       <footer class="site-footer">
         <p class="update-link">
-          Want your profile here too? <a href="profile-update.php">Reach out to us</a>.
+          Want your profile here too? <a href="/profile-update">Reach out to us</a>.
         </p>
         <p>(c) <?php echo date('Y'); ?> Bauchi Pearl Magazine</p>
       </footer>

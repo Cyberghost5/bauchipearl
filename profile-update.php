@@ -57,15 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="assets/bph-favicon.png" type="image/png">
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="/assets/bph-favicon.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <div class="page">
       <header class="site-header">
         <p class="kicker">Bauchi Pearl Magazine</p>
         <center>
-          <img src="assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 200px;" />
+          <img src="/assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 200px;" />
         </center>
         <h1>Request a Profile Update</h1>
         <p class="intro">
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <p class="status-message"><?php echo e($error); ?></p>
         <?php endif; ?>
 
-        <form class="request-form" method="post" action="profile-update.php">
+        <form class="request-form" method="post" action="/profile-update">
           <label>
             Full Name
             <input type="text" name="name" value="<?php echo e($name); ?>" required />
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </label>
           <div class="request-actions">
             <button class="read-more" type="submit">Send Request</button>
-            <a class="read-more" href="./">Back to Profiles</a>
+            <a class="read-more" href="/">Back to Profiles</a>
           </div>
         </form>
       </main>

@@ -2,4 +2,4 @@
 require __DIR__ . '/bootstrap.php';
 
 logout_admin();
-redirect('login.php');
+redirect('/admin/login');

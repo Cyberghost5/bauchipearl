@@ -56,7 +56,7 @@ function is_logged_in(): bool
 function require_login(): void
 {
     if (!is_logged_in()) {
-        redirect('login.php');
+        redirect('/admin/login');
     }
 }
 
@@ -71,7 +71,7 @@ function uploads_dir(): string
 
 function placeholder_image(): string
 {
-    return '../assets/placeholder.svg';
+    return '/assets/placeholder.svg';
 }
 
 function normalize_image_path(?string $imagePath): string
@@ -79,11 +79,12 @@ function normalize_image_path(?string $imagePath): string
     if ($imagePath === null || $imagePath === '') {
         return placeholder_image();
     }
-    $absolutePath = __DIR__ . '/../' . $imagePath;
+    $relativePath = ltrim($imagePath, '/');
+    $absolutePath = __DIR__ . '/../' . $relativePath;
     if (!is_file($absolutePath)) {
         return placeholder_image();
     }
-    return '../' . $imagePath;
+    return '/' . $relativePath;
 }
 
 function delete_image_file(?string $imagePath): void

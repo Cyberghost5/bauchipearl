@@ -5,7 +5,7 @@ require_login();
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
-    redirect('index.php');
+    redirect('/admin');
 }
 
 $stmt = db()->prepare('SELECT id, name, role, bio, image_path FROM profiles WHERE id = :id');
@@ -13,7 +13,7 @@ $stmt->execute(['id' => $id]);
 $profile = $stmt->fetch();
 
 if (!$profile) {
-    redirect('index.php');
+    redirect('/admin');
 }
 
 $error = $_GET['error'] ?? '';
@@ -30,8 +30,8 @@ $error = $_GET['error'] ?? '';
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="../assets/bph-favicon.png" type="image/png">
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="shortcut icon" href="/assets/bph-favicon.png" type="image/png">
+    <link rel="stylesheet" href="/admin/admin.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"
@@ -45,8 +45,8 @@ $error = $_GET['error'] ?? '';
           <h1>Edit Profile</h1>
         </div>
         <div class="admin-actions">
-          <a class="button ghost" href="index.php">Back to Dashboard</a>
-          <a class="button ghost" href="logout.php">Log Out</a>
+          <a class="button ghost" href="/admin">Back to Dashboard</a>
+          <a class="button ghost" href="/admin/logout">Log Out</a>
         </div>
       </header>
 
@@ -56,7 +56,7 @@ $error = $_GET['error'] ?? '';
         <div class="panel warning">Please upload a valid image file.</div>
       <?php endif; ?>
 
-      <form class="panel form" method="post" action="update.php" enctype="multipart/form-data">
+      <form class="panel form" method="post" action="/admin/update" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo (int) $profile['id']; ?>" />
         <label>
           Name
@@ -83,7 +83,7 @@ $error = $_GET['error'] ?? '';
         </div>
         <div class="form-actions">
           <button class="button" type="submit">Update Profile</button>
-          <a class="button ghost" href="index.php">Cancel</a>
+          <a class="button ghost" href="/admin">Cancel</a>
         </div>
       </form>
     </div>

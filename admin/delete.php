@@ -4,12 +4,12 @@ require __DIR__ . '/bootstrap.php';
 require_login();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect('index.php');
+    redirect('/admin');
 }
 
 $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
-    redirect('index.php');
+    redirect('/admin');
 }
 
 $stmt = db()->prepare('SELECT image_path FROM profiles WHERE id = :id');
@@ -22,4 +22,4 @@ if ($profile) {
     $delete->execute(['id' => $id]);
 }
 
-redirect('index.php');
+redirect('/admin');

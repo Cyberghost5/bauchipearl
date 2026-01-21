@@ -17,16 +17,26 @@ function sanitize_html(string $html): string
     return nl2br($clean);
 }
 
-$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-if (!$id) {
-    header('Location: ../');
+// Using ID
+// $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+// if (!$id) {
+//     header('Location: ../');
+//     exit;
+// }
+
+// Using Slug
+$slug = filter_input(INPUT_GET, 'slug', FILTER_DEFAULT);
+if (!$slug) {
+    header('Location: /');
     exit;
 }
 
 $profile = null;
 try {
-    $stmt = db()->prepare('SELECT id, name, role, bio, image_path FROM profiles WHERE id = :id');
-    $stmt->execute(['id' => $id]);
+    // $stmt = db()->prepare('SELECT id, name, role, bio, slug, created_at, image_path FROM profiles WHERE id = :id');
+    // $stmt->execute(['id' => $id]);
+    $stmt = db()->prepare('SELECT id, name, role, bio, slug, created_at, image_path FROM profiles WHERE slug = :slug');
+    $stmt->execute(['slug' => $slug]);
     $profile = $stmt->fetch();
 } catch (Throwable $throwable) {
     $profile = null;
@@ -41,6 +51,9 @@ $absolutePath = $imagePath ? __DIR__ . '/' . $imagePath : '';
 if ($imagePath === '' || !is_file($absolutePath)) {
     $imagePath = 'assets/placeholder.svg';
 }
+if ($imagePath !== '' && $imagePath[0] !== '/') {
+    $imagePath = '/' . $imagePath;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,16 +67,16 @@ if ($imagePath === '' || !is_file($absolutePath)) {
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="assets/bph-favicon.png" type="image/png">
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="shortcut icon" href="/assets/bph-favicon.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <div class="page">
       <header class="site-header site-header--detail">
-        <a class="back-link" href="../">Back to profiles</a>
-        <img src="assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 100px;" />
+        <a class="back-link" href="/">Back to profiles</a>
+        <img src="/assets/bhp-logo.png" alt="Bauchi Pearl Magazine Logo" class="site-logo" style="width: 100px;" />
         <p class="kicker">Bauchi Pearl Magazine</p>
-        <h1>Profile</h1>
+        <h1><?php echo e($profile['name']); ?> Profile</h1>
       </header>
 
       <main>
@@ -81,6 +94,7 @@ if ($imagePath === '' || !is_file($absolutePath)) {
             <div class="profile-detail-body">
               <h2><?php echo e($profile['name']); ?></h2>
               <p class="profile-role"><?php echo e($profile['role']); ?></p>
+              <p><?php echo e(date('dS F, Y', strtotime($profile['created_at']))) ?></p>
               <div class="profile-bio"><?php echo sanitize_html($profile['bio']); ?></div>
             </div>
           </section>
